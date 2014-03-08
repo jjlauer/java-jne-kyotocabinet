@@ -1,5 +1,13 @@
-mkdir -p build/linux-x64/sysroot
-cd build/linux-x64
+
+## for compiling x64 version on a 64-bit system
+export BUILD_ROOT=build/linux-x64
+
+## cross compiling x32 version on a 32-bit system
+export BUILD_ROOT=build/linux-x32
+
+
+mkdir -p ${BUILD_ROOT}/sysroot
+cd ${BUILD_ROOT}
 
 
 # LZO lib
@@ -18,7 +26,7 @@ cd ..
 wget http://tukaani.org/xz/xz-5.0.5.tar.gz
 tar zxvf xz-5.0.5.tar.gz
 cd xz-5.0.5
-./configure --prefix=$(realpath ../sysroot) --disable-xz --disable-xzdec --disable-lzmadec --disable-lzmainfo --disable-shared --with-pic
+./configure --prefix=$(realpath ../sysroot) --disable-assembler --disable-xz --disable-xzdec --disable-lzmadec --disable-lzmainfo --disable-shared --with-pic
 make
 make install
 
