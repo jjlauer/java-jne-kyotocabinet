@@ -1,26 +1,18 @@
 ### Overview
 
-Native executable "ffmpeg" to be easily embedded and used from Java as a dependency.
-The upstream ffmpeg version that is included in this jar will match the version
-of this jar. So "mfz-jne-ffmpeg-2.1.4.jar" will be based on ffmpeg v2.1.4.
+Drop-in replacement for "kyotocabinet" that includes compiled and embedded
+native libraries for Windows, Linux, and Mac.  The libraries are dynamically
+extracted and loaded at runtime via "mfz-jne" support library.  Thus, you can
+use Kyoto Cabinet in Java without having to install any native libraries on
+the runtime platform.
 
+ - Based on Kyoto Cabinet library 1.2.76
+ - Based on Kyoto Cabinet java binding 1.24
+ - Includes LZO compression 2.06
+ - Includes LZMA compression 5.05
 
-### Static builds of ffmpeg
-
-#### Windows
-
-Supports x86/x64 version >= XP
-http://ffmpeg.zeranoe.com/builds/
-
-#### Mac OSX
-
-Supports x64 version >= 10.6., 10.7., 10.8. or 10.9 (Snow Leopard, Lion, Mountain Lion and Mavericks)
-http://ffmpegmac.net/
-
-#### Linux
-
-Supports x86/x64 version >= 3.2.x
-http://ffmpeg.gusari.org/static/
+The only modifications this library has made to Kyoto is to replace "Loader.java".
+Everything else including the package name "kyotocabinet" remains the same.
 
 ### Demos
 
@@ -30,4 +22,4 @@ mvn -e test-compile exec:java -Dexec.classpathScope="test" -Dexec.mainClass="kyo
 
 ### Compiling on various platforms
 
-Linux: FFMPEG_LINUX.md
+Linux: COMPILING_LINUX.md
