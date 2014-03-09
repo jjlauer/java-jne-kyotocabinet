@@ -1,4 +1,9 @@
 
+## On Ubuntu, install build tools:
+
+    sudo apt-get install build-essential checkinstall realpath libz-dev
+
+
 ## for compiling x64 version on a 64-bit system
 export BUILD_ROOT=build/linux-x64
 
@@ -26,7 +31,7 @@ cd ..
 wget http://tukaani.org/xz/xz-5.0.5.tar.gz
 tar zxvf xz-5.0.5.tar.gz
 cd xz-5.0.5
-./configure --prefix=$(realpath ../sysroot) --disable-assembler --disable-xz --disable-xzdec --disable-lzmadec --disable-lzmainfo --disable-shared --with-pic
+./configure --prefix=$(realpath ../sysroot) --disable-xz --disable-xzdec --disable-lzmadec --disable-lzmainfo --disable-shared --with-pic
 make
 make install
 
@@ -55,6 +60,7 @@ tar zxvf kyotocabinet-java-1.24.tar.gz
 cd kyotocabinet-java-1.24
 
 LIBS="-llzo2 -llzma" \
+CPPFLAGS="-I/usr/lib/jvm/java-7-openjdk-i386/include" \
 ./configure --with-kc=$(realpath ../sysroot) --prefix=$(realpath ../sysroot)
 
 make
