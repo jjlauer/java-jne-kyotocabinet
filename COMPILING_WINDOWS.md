@@ -3,6 +3,7 @@
 # http://downloads.sourceforge.net/gnuwin32/wget-1.11.4-1-setup.exe
 # http://downloads.sourceforge.net/project/gnuwin32/tar/1.13-1/tar-1.13-1-bin.exe
 # http://downloads.sourceforge.net/project/gnuwin32/gzip/1.3.12-1/gzip-1.3.12-1-setup.exe
+# http://downloads.sourceforge.net/project/gnuwin32/unzip/5.51-1/unzip-5.51-1.exe
 
 # dependency walkter is nice to view what libs something uses
 # http://www.dependencywalker.com/depends22_x64.zip
@@ -47,10 +48,34 @@ set PATH=%PATH%;"C:\Program Files (x86)\GnuWin32\bin"
 
 # LZO lib
 wget http://www.oberhumer.com/opensource/lzo/download/lzo-2.06.tar.gz
+gzip -d lzo-2.06.tar.gz
+tar xvf lzo-2.06.tar
+cd lzo-2.06\B\win64
+
+# for win64
+B\win64\vc_dll.bat
+
+# for win32
+B\win32\vc_dll.bat
 
 
-# LZMA lib
-wget http://tukaani.org/xz/xz-5.0.5.tar.gz
+# Z lib
+wget http://zlib.net/zlib-1.2.8.tar.gz
+gzip -d zlib-1.2.8.tar.gz
+tar xvf zlib-1.2.8.tar
+cd zlib-1.2.8
+
+# to build for x64 (with assembly code)
+nmake -f win32/Makefile.msc AS=ml64 LOC="-DASMV -DASMINF -I." OBJA="inffasx64.obj gvmat64.obj inffas8664.obj"
+
+
+# LZMA lib (already pre-built libraries for windows!!!)
+md xz-5.0.5-windows
+cd xz-5.0.5-windows
+wget http://tukaani.org/xz/xz-5.0.5-windows.zip
+unzip xz-5.0.5-windows.zip
+
+
 
 
 # 
@@ -82,7 +107,7 @@ cd kyotocabinet-1.2.76
 # replace $(LINK) with $(LINKCMD)
 
 
-nmake -f VCmakefile
+nmake -f VCmakefile kyotocabinet.lib
 nmake -f VCmakefile binpkg
 
 
@@ -98,6 +123,10 @@ cd kyotocabinet-java-1.24
 
 # copy libs from kyotolib
 xcopy /s ..\kyotocabinet-1.2.76\kcwin32 .\kcwin32
+
+# copy libs from lzo
+xcopy /s ..\lzo-2.06\*.lib .\kcwin32\lib
+xcopy /s ..\lzo-2.06\*.dll .\kcwin32\lib
 
 
 # The default VCmakefile has the wrong paths to the sdks, java, etc...
@@ -144,4 +173,11 @@ xcopy jkyotocabinet.dll ..\..\..\jne\windows\x64\
 
 # copy x32
 xcopy jkyotocabinet.dll ..\..\..\jne\windows\x32\
+
+
+## Testing x64 and x32 on same system
+# Assuming you are on x64 by default with an x64 of Java - do your normal testing
+# To override to x32 Java, just do the following:
+set JAVA_HOME=C:\Program Files (x86)\Java\jdk1.7.0_51
+set PATH=%JAVA_HOME%\bin;%PATH%
 
