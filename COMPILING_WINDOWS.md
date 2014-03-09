@@ -56,10 +56,10 @@ cd kyotocabinet-1.2.76
 
 # The default VCmakefile unfortunately overrides environment vars
 # that Windows SDK by default provides.  Here is how you fix the
-# makefile.
+# makefile. If you already modified win-x64, just use that one
+# xcopy ..\..\win-x64\kyotocabinet-1.2.76\VCmakefile .\
 
 # comment out VCPATH and SDKPATH settings
-# adjust LIBFLAGS and LINKFLAGS to remove all VCPATH and SDKPATH includes\libs
 
 # change:
 # CL = cl
@@ -95,7 +95,9 @@ xcopy /s ..\kyotocabinet-1.2.76\kcwin32 .\kcwin32
 
 
 # The default VCmakefile has the wrong paths to the sdks, java, etc...
-#
+# If you already modified win-x64, just use that one
+# xcopy ..\..\win-x64\kyotocabinet-java-1.24\VCmakefile .\
+
 # Open file and edit these accordingly
 VCPATH = C:\Program Files\Microsoft Visual Studio 10.0\VC
 SDKPATH = C:\Program Files\Microsoft SDKs\Windows\v7.0A
@@ -130,3 +132,10 @@ nmake -f VCmakefile
 
 
 # jkyotocabinet.dll will not be in the directory
+
+# copy x64
+xcopy jkyotocabinet.dll ..\..\..\jne\windows\x64\
+
+# copy x32
+xcopy jkyotocabinet.dll ..\..\..\jne\windows\x32\
+
