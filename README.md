@@ -16,9 +16,9 @@ Everything else including the package name "kyotocabinet" remains the same.
 
 ### Demos
 
-mvn -e test-compile exec:java -Dexec.classpathScope="test" -Dexec.mainClass="com.mfizz.kyoto.demo.KyotoMain" -Djne.debug=true
+mvn -e test-compile exec:java -Dexec.classpathScope="test" -Dexec.mainClass="com.mfizz.kyoto.demo.KyotoMain" -Djne.debug="1"
 
-mvn -e test-compile exec:java -Dexec.classpathScope="test" -Dexec.mainClass="kyotocabinet.Test"mvn -e test-compile exec:java -Dexec.classpathScope="test" -Dexec.mainClass="kyotocabinet.Test" -Dexec.args="wicked target/wicked.kch 2"
+mvn -e test-compile exec:java -Dexec.classpathScope="test" -Dexec.mainClass="kyotocabinet.Test" -Dexec.args="wicked target/wicked.kch 2"
 
 ### Compiling on various platforms
 
