@@ -11,6 +11,18 @@
 # Useful info for wireshark (helps for any command-line builds)
 # http://www.wireshark.org/docs/wsdg_html_chunked/ChSetupWin32.html
 
+# On Windows 8:
+#  Install Visual Studio C++ Express Edition
+#  Install Windows SDK for 8.1
+
+# Then to compile for x86:
+#  Run "VS2012 x86 Cross Tools Command Prompt"
+
+# Then to compile for x64:
+#  Run "VS2012 x64 Cross Tools Command Prompt"
+
+
+
 ######### Using Visual Studio C++ 2010 Express Edition
 Start Menu -> Microsoft Visual Studio 2010 Express -> Visual Studio Command Prompt (2010)
 
@@ -20,6 +32,9 @@ C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.Cmd" /Release /x86
 # To build 64-bit binaries call:
 "C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.Cmd" /Release /x64
 
+
+
+# include a few utils like wget, tar, gzip
 # add gnu utils to path
 set PATH=%PATH%;"C:\Program Files (x86)\GnuWin32\bin"
 
@@ -39,15 +54,26 @@ tar xvf kyotocabinet-1.2.76.tar
 cd kyotocabinet-1.2.76
 
 
-# The default VCmakefile has the wrong paths to the microsoft sdks...
-#
-# Open VCmakefile and set these accordingly
-# VCPATH = C:\Program Files\Microsoft Visual Studio 10.0\VC
-# SDKPATH = C:\Program Files\Microsoft SDKs\Windows\v7.0A
-#
-# On my system they were:
-# VCPATH = C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC
-# SDKPATH = C:\Program Files\Microsoft SDKs\Windows\v7.1
+# The default VCmakefile unfortunately overrides environment vars
+# that Windows SDK by default provides.  Here is how you fix the
+# makefile.
+
+# comment out VCPATH and SDKPATH settings
+# adjust LIBFLAGS and LINKFLAGS to remove all VCPATH and SDKPATH includes\libs
+
+# change:
+# CL = cl
+# LIB = lib
+# LIN = link
+
+# to:
+# CLCMD = cl
+# LIBCMD = lib
+# LINKCMD = link
+
+# replace $(CL) with $(CLCMD)
+# replace $(LIB) with $(LIBCMD)
+# replace $(LINK) with $(LINKCMD)
 
 
 nmake -f VCmakefile
@@ -71,16 +97,33 @@ xcopy /s ..\kyotocabinet-1.2.76\kcwin32 .\kcwin32
 # The default VCmakefile has the wrong paths to the sdks, java, etc...
 #
 # Open file and edit these accordingly
-# VCPATH = C:\Program Files\Microsoft Visual Studio 10.0\VC
-# SDKPATH = C:\Program Files\Microsoft SDKs\Windows\v7.0A
-# JDKPATH = C:\Program Files\Java\jdk1.7.0_51
-# KCPATH = kcwin32
+VCPATH = C:\Program Files\Microsoft Visual Studio 10.0\VC
+SDKPATH = C:\Program Files\Microsoft SDKs\Windows\v7.0A
+JDKPATH = C:\Program Files\Java\jdk1.7.0_51
+KCPATH = kcwin32
 #
 # On my system they were:
-# VCPATH = C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC
-# SDKPATH = C:\Program Files\Microsoft SDKs\Windows\v7.1
-# JDKPATH = C:\Program Files\Java\jdk1.7.0_51
-# KCPATH = kcwin32
+#VCPATH = C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC
+#SDKPATH = C:\Program Files\Microsoft SDKs\Windows\v7.1
+JDKPATH = $(JAVA_HOME)
+KCPATH = kcwin32
+
+
+# then as above...
+# change:
+# CL = cl
+# LIB = lib
+# LIN = link
+
+# to:
+# CLCMD = cl
+# LIBCMD = lib
+# LINKCMD = link
+
+# replace $(CL) with $(CLCMD)
+# replace $(LIB) with $(LIBCMD)
+# replace $(LINK) with $(LINKCMD)
+
 
 
 nmake -f VCmakefile
