@@ -11,27 +11,33 @@
 # Useful info for wireshark (helps for any command-line builds)
 # http://www.wireshark.org/docs/wsdg_html_chunked/ChSetupWin32.html
 
-# On Windows 8:
-#  Install Visual Studio C++ Express Edition
-#  Install Windows SDK for 8.1
 
-# Then to compile for x86:
-#  Run "VS2012 x86 Cross Tools Command Prompt"
+# On Windows 8:
+#  Install Visual Studio C++ Express Edition 2010/2013
+#  Install Windows SDK for 8.1
 
 # Then to compile for x64:
 #  Run "VS2012 x64 Cross Tools Command Prompt"
 
+# Then to compile for x86:
+#  Run "VS2012 x86 Cross Tools Command Prompt"
 
 
-######### Using Visual Studio C++ 2010 Express Edition
-Start Menu -> Microsoft Visual Studio 2010 Express -> Visual Studio Command Prompt (2010)
+# On Windows 7 (or XP I believe):
+#  Install Microsoft Visual C++ 2010 Express Edition
+#  Install Microsoft Windows SDK for Windows 7
+#    In case the install of the SDK fails go to software management and remove
+#    the VC++ 2010 runtime and redist packages
+#  Install Microsoft Visual Studio 2010 Service Pack 1
+#  Microsoft Visual C++ 2010 Service Pack 1 Compiler Update for the Windows SDK 7.1
 
-# To build 32-bit binaries call:
-C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.Cmd" /Release /x86
+# Then to compile for x64:
+#  Run "Windows SDK 7.1 Command Prompt" (under Start Menu -> Microsoft Windows SDK v7.1)
+#  SetEnv /Release /x64
 
-# To build 64-bit binaries call:
-"C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\SetEnv.Cmd" /Release /x64
-
+# Then to compile for x86:
+#  Run "Windows SDK 7.1 Command Prompt" (under Start Menu -> Microsoft Windows SDK v7.1)
+#  SetEnv /Release /x86
 
 
 # include a few utils like wget, tar, gzip
