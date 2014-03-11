@@ -4,6 +4,7 @@
 # http://downloads.sourceforge.net/project/gnuwin32/tar/1.13-1/tar-1.13-1-bin.exe
 # http://downloads.sourceforge.net/project/gnuwin32/gzip/1.3.12-1/gzip-1.3.12-1-setup.exe
 # http://downloads.sourceforge.net/project/gnuwin32/unzip/5.51-1/unzip-5.51-1.exe
+# http://downloads.sourceforge.net/project/gnuwin32/sed/4.2.1/sed-4.2.1-setup.exe
 
 # dependency walkter is nice to view what libs something uses
 # http://www.dependencywalker.com/depends22_x64.zip
@@ -24,7 +25,7 @@
 #  Run "VS2012 x86 Cross Tools Command Prompt"
 
 
-# On Windows 7 (or XP I believe):
+# On Windows 7 (or XP):
 #  Install Microsoft Visual C++ 2010 Express Edition
 #  Install Microsoft Windows SDK for Windows 7
 #    In case the install of the SDK fails go to software management and remove
@@ -34,29 +35,39 @@
 
 # Then to compile for x64:
 #  Run "Windows SDK 7.1 Command Prompt" (under Start Menu -> Microsoft Windows SDK v7.1)
-#  SetEnv /Release /x64
+#  SetEnv /Release /x64 /XP
 
 # Then to compile for x86:
 #  Run "Windows SDK 7.1 Command Prompt" (under Start Menu -> Microsoft Windows SDK v7.1)
-#  SetEnv /Release /x86
+#  SetEnv /Release /x86 /XP
 
 
 # include a few utils like wget, tar, gzip
-# add gnu utils to path
+# either add to path here or set as permanent env var
 set PATH=%PATH%;"C:\Program Files (x86)\GnuWin32\bin"
+
+
+set BUILD_ARCH=x64
+mkdir native
+mkdir native\win-%BUILD_ARCH%
+cd native\win-%BUILD_ARCH%
+
 
 
 # LZO lib
 wget http://www.oberhumer.com/opensource/lzo/download/lzo-2.06.tar.gz
 gzip -d lzo-2.06.tar.gz
 tar xvf lzo-2.06.tar
-cd lzo-2.06\B\win64
+cd lzo-2.06
 
-# for win64
-B\win64\vc_dll.bat
+# for win64 static lib
+B\win64\vc.bat
 
-# for win32
-B\win32\vc_dll.bat
+# for win32 static lib
+B\win32\vc.bat
+
+
+cd ..
 
 
 # Z lib
@@ -69,12 +80,13 @@ cd zlib-1.2.8
 nmake -f win32/Makefile.msc AS=ml64 LOC="-DASMV -DASMINF -I." OBJA="inffasx64.obj gvmat64.obj inffas8664.obj"
 
 
+
+# SKIP THIS ON WINDOWS!
 # LZMA lib (already pre-built libraries for windows!!!)
 md xz-5.0.5-windows
 cd xz-5.0.5-windows
 wget http://tukaani.org/xz/xz-5.0.5-windows.zip
 unzip xz-5.0.5-windows.zip
-
 
 
 
@@ -90,22 +102,19 @@ cd kyotocabinet-1.2.76
 # makefile. If you already modified win-x64, just use that one
 # xcopy ..\..\win-x64\kyotocabinet-1.2.76\VCmakefile .\
 
-# comment out VCPATH and SDKPATH settings
+# use sed to correct the VCmakefile
+sed -i -e "s/VCPATH \= /#VCPATH \= /" VCmakefile
+sed -i -e "s/SDKPATH \= /#SDKPATH \= /" VCmakefile
+sed -i -e "s/CL = cl/CLCMD = cl/" VCmakefile
+sed -i -e "s/LIB = lib/LIBCMD = lib/" VCmakefile
+sed -i -e "s/LINK = link/LINKCMD = link/" VCmakefile
+sed -i -e "s/\$(CL)/\$(CLCMD)/" VCmakefile
+sed -i -e "s/\$(LIB)/\$(LIBCMD)/" VCmakefile
+sed -i -e "s/\$(LINK)/\$(LINKCMD)/" VCmakefile
+sed -i -e "s/\tcopy \*.exe/#\tcopy *.exe/" VCmakefile
 
-# change:
-# CL = cl
-# LIB = lib
-# LIN = link
-
-# to:
-# CLCMD = cl
-# LIBCMD = lib
-# LINKCMD = link
-
-# replace $(CL) with $(CLCMD)
-# replace $(LIB) with $(LIBCMD)
-# replace $(LINK) with $(LINKCMD)
-
+# to enable LZO and ZLIB
+sed -i -e "s/\/D_CRT_SECURE_NO_WARNINGS \\/\/D_CRT_SECURE_NO_WARNINGS \/D_MYLZO \/I \"..\\lzo-2.06\\include\" \/D_MYZLIB \/I \"..\\zlib-1.2.8\" \\/" VCmakefile
 
 nmake -f VCmakefile kyotocabinet.lib
 nmake -f VCmakefile binpkg
@@ -126,53 +135,30 @@ xcopy /s ..\kyotocabinet-1.2.76\kcwin32 .\kcwin32
 
 # copy libs from lzo
 xcopy /s ..\lzo-2.06\*.lib .\kcwin32\lib
-xcopy /s ..\lzo-2.06\*.dll .\kcwin32\lib
+# copy libs from zlib
+xcopy /s ..\zlib-1.2.8\*.lib .\kcwin32\lib
+
 
 
 # The default VCmakefile has the wrong paths to the sdks, java, etc...
-# If you already modified win-x64, just use that one
-# xcopy ..\..\win-x64\kyotocabinet-java-1.24\VCmakefile .\
+sed -i -e "s/VCPATH \= /#VCPATH \= /" VCmakefile
+sed -i -e "s/SDKPATH \= /#SDKPATH \= /" VCmakefile
+sed -i -e "s/JDKPATH \= .*/JDKPATH \= \$(JAVA_HOME)/" VCmakefile
+sed -i -e "s/CL = cl/CLCMD = cl/" VCmakefile
+sed -i -e "s/LIB = lib/LIBCMD = lib/" VCmakefile
+sed -i -e "s/LINK = link/LINKCMD = link/" VCmakefile
+sed -i -e "s/\$(CL)/\$(CLCMD)/" VCmakefile
+sed -i -e "s/\$(LIB)/\$(LIBCMD)/" VCmakefile
+sed -i -e "s/\$(LINK)/\$(LINKCMD)/" VCmakefile
 
-# Open file and edit these accordingly
-VCPATH = C:\Program Files\Microsoft Visual Studio 10.0\VC
-SDKPATH = C:\Program Files\Microsoft SDKs\Windows\v7.0A
-JDKPATH = C:\Program Files\Java\jdk1.7.0_51
-KCPATH = kcwin32
-#
-# On my system they were:
-#VCPATH = C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC
-#SDKPATH = C:\Program Files\Microsoft SDKs\Windows\v7.1
-JDKPATH = $(JAVA_HOME)
-KCPATH = kcwin32
-
-
-# then as above...
-# change:
-# CL = cl
-# LIB = lib
-# LIN = link
-
-# to:
-# CLCMD = cl
-# LIBCMD = lib
-# LINKCMD = link
-
-# replace $(CL) with $(CLCMD)
-# replace $(LIB) with $(LIBCMD)
-# replace $(LINK) with $(LINKCMD)
-
-
+# Add linkage to LZO and ZLIB
+sed -i -e "s/kcwin32\\lib\\kyotocabinet.lib/\$(KCPATH)\\lib\\kyotocabinet.lib \$(KCPATH)\\lib\\lzo2.lib \$(KCPATH)\\lib\\zlib.lib/" VCmakefile
 
 nmake -f VCmakefile
 
 
 # jkyotocabinet.dll will not be in the directory
-
-# copy x64
-xcopy jkyotocabinet.dll ..\..\..\jne\windows\x64\
-
-# copy x32
-xcopy jkyotocabinet.dll ..\..\..\jne\windows\x32\
+xcopy jkyotocabinet.dll ..\..\..\jne\windows\%BUILD_ARCH%\
 
 
 ## Testing x64 and x32 on same system
