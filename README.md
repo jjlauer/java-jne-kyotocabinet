@@ -15,37 +15,26 @@ The current version of this library uses the following:
  - Kyoto Cabinet v1.2.76 (http://fallabs.com/kyotocabinet)
  - Kyoto Cabinet Java Wrapper v1.24 (http://fallabs.com/kyotocabinet)
  - LZO v2.06 (http://www.oberhumer.com/opensource/lzo)
- - LZMA v5.05 (http://tukaani.org/xz)
+ - LZMA v5.05 (http://tukaani.org/xz) (* not included on Windows)
  - ZLIB v1.2.8 (http://zlib.net)
 
-The only modifications this library has made to Kyoto is to replace "Loader.java".
+The only modification to the underlying kyotocabinet Java library is 1 line in
+"kyotocabinet.Loader.java" to use JNE.loadLibrary() rather than System.loadLibrary().
 Everything else including the package name "kyotocabinet" remains the same.
 
-#### Windows
+### Build Platforms
 
-Compiled on Windows XP SP2 x64 host for both x32 and x64 targets. Tested on XP,
-Windows 7, and Windows 8.1. The Windows library does not include LZMA due to
-issues with Microsoft Visual C++ compiler and the LZMA-provided library compiled
-with GCC.
-
-See COMPILING_WINDOWS.md for more info.
-
-#### Linux
-
-Compiled on Ubuntu 8.04 x32 and x64 hosts (kernel 2.6.24). Also, tested on Ubuntu 12.04
-and Ubuntu 13.10 (kernel 3.5.0-37). Library includes shared link to libz (seems
-like its by default on every linux distro) and statically compiled versions of
-liblzo and liblzma. If you happen to try and use another Java native library
-that also uses these libraries, you'll end up with a runtime error.  Since I 
-think the likelihood of most users hitting this case is remote, I took the ease
-of use of statically compiling it in vs. forcing you to install the libraries
-on the target machine or requiring you to set LD_LIBRARY_PATH for Java.
-
-See COMPILING_LINUX.md for more info.
-
-#### Mac OSX
-
-
+ - *windows-x64*: Windows XP SP2 x64 edition and Windows 7.1 SDK (MBE - 7.1 SDK has the same
+   compilers as VS2010). Tested on XP x32/x64, 7 x64, and 8.1 x64. The Windows
+   library does not include support for LZMA compression (but LZO and Z are included).
+   See COMPILING_WINDOWS.md for more info.
+ - *windows-x32*: Same as windows-x64 but with the /X86 target in Windows 7.1 SDK.
+ - *linux-x64*: Ubuntu 8.04 x64 edition (kernel 2.6.24) and GCC 4.2.4.  Tested on
+   Ubuntu 12.04 and Ubuntu 13.10 (kernel 3.5.0-37). Library requires shared library
+   libz to be on system (seems like its on all base installs of linux) and
+   statically included versions of liblzo and liblzma. See COMPILING_LINUX.md for more info.
+ - *linux-x32*: Same as linux-x64 but on an x86 host.
+ - *osx-x64*: Mac OSX 10.8 x64 targeting 10.5 compatability.
 
 ### Demos
 

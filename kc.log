@@ -1,0 +1,5 @@
+[DEBUG]: /home/joelauer/workspace/mfizz/java-jne-kyotocabinet/native/linux-x64/sysroot/include/kchashdb.h: 806: open: -: opening the database (path=target/libz.kch)
+[WARN]: /home/joelauer/workspace/mfizz/java-jne-kyotocabinet/native/linux-x64/sysroot/include/kchashdb.h: 2717: reorganize_file: -: reorganizing the database
+[DEBUG]: /home/joelauer/workspace/mfizz/java-jne-kyotocabinet/native/linux-x64/sysroot/include/kchashdb.h: 806: open: -: opening the database (path=target/libz.kch)
+[WARN]: /home/joelauer/workspace/mfizz/java-jne-kyotocabinet/native/linux-x64/sysroot/include/kchashdb.h: 2717: reorganize_file: -: reorganizing the database
+[DEBUG]: /home/joelauer/workspace/mfizz/java-jne-kyotocabinet/native/linux-x64/sysroot/include/kchashdb.h: 806: open: -: opening the database (path=target/libz.kch)

@@ -61,6 +61,6 @@
 
     <properties>
         <license.skip>true</license.skip>
-        <main.java.package>com.mfizz.jne.ffmpeg</main.java.package>
+        <main.java.package>com.mfizz.jne.kyotocabinet</main.java.package>
     </properties>
 </project>

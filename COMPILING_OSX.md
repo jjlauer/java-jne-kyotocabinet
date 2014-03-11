@@ -5,6 +5,7 @@ Install Oracle JDK 7 (build 51 as of this doc)
   http://java.oracle.com/
 
 Make sure JAVA_HOME is set to your JDK!!
+  export JAVA_HOME=$(/usr/libexec/java_home)
 
 
 ## Set the os and arch you are targeting a build for
@@ -108,8 +109,6 @@ wget http://fallabs.com/kyotocabinet/javapkg/kyotocabinet-java-${VER_KC_JAVA}.ta
 tar zxvf kyotocabinet-java-${VER_KC_JAVA}.tar.gz
 cd kyotocabinet-java-${VER_KC_JAVA}
 
-
-export JAVA_HOME=$(/usr/libexec/java_home)
 
 LIBS="-llzo2 -llzma" \
 CXXFLAGS="-mmacosx-version-min=10.5 -I$JAVA_HOME/include -I$JAVA_HOME/include/darwin" \
