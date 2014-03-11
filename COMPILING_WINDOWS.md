@@ -48,6 +48,12 @@ set PATH=%PATH%;"C:\Program Files (x86)\GnuWin32\bin"
 
 
 set BUILD_ARCH=x64
+
+OR
+
+set BUILD_ARCH=x32
+
+
 mkdir native
 mkdir native\win-%BUILD_ARCH%
 cd native\win-%BUILD_ARCH%
@@ -79,6 +85,9 @@ cd zlib-1.2.8
 # to build for x64 (with assembly code)
 nmake -f win32/Makefile.msc AS=ml64 LOC="-DASMV -DASMINF -I." OBJA="inffasx64.obj gvmat64.obj inffas8664.obj"
 
+# to build for x32 (with assembly code)
+nmake -f win32/Makefile.msc LOC="-DASMV -DASMINF" OBJA="inffas32.obj match686.obj"
+
 
 
 # SKIP THIS ON WINDOWS!
@@ -90,7 +99,7 @@ unzip xz-5.0.5-windows.zip
 
 
 
-# 
+# Build kyotocabinet.lib
 wget http://fallabs.com/kyotocabinet/pkg/kyotocabinet-1.2.76.tar.gz
 gzip -d kyotocabinet-1.2.76.tar.gz
 tar xvf kyotocabinet-1.2.76.tar
@@ -152,7 +161,7 @@ sed -i -e "s/\$(LIB)/\$(LIBCMD)/" VCmakefile
 sed -i -e "s/\$(LINK)/\$(LINKCMD)/" VCmakefile
 
 # Add linkage to LZO and ZLIB
-sed -i -e "s/kcwin32\\lib\\kyotocabinet.lib/\$(KCPATH)\\lib\\kyotocabinet.lib \$(KCPATH)\\lib\\lzo2.lib \$(KCPATH)\\lib\\zlib.lib/" VCmakefile
+sed -i -e "s/kcwin32\\lib\\kyotocabinet.lib/\/NODEFAULTLIB:MSVCRT \$(KCPATH)\\lib\\kyotocabinet.lib \$(KCPATH)\\lib\\lzo2.lib \$(KCPATH)\\lib\\zlib.lib/" VCmakefile
 
 nmake -f VCmakefile
 
