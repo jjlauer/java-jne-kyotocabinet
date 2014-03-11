@@ -1,5 +1,5 @@
-Java Native Executable - Kyoto Cabinet Library
-==============================================
+Java/Native Kyoto Cabinet Library
+=================================
 
 ### Contributors
 
