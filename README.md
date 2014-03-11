@@ -8,8 +8,9 @@ Java/Native Kyoto Cabinet Library
 
 ### Overview
 
-Drop-in replacement for "kyotocabinet" that includes compiled and embedded
-native libraries for Windows (x32/x64; XP and above), Linux (x32/x64; kernel 2.6 and above),
+Drop-in replacement for "kyotocabinet" that includes both the [Kyoto Cabinet](http://fallabs.com/kyotocabinet/)
+Java bindings and compiled/embedded native libraries in a single, small, and 
+efficient JAR.  Native libraries are included for Windows (x32/x64; XP and above), Linux (x32/x64; kernel 2.6 and above),
 and Mac OSX (x64; 10.5 and above).  The libraries are dynamically extracted and
 loaded at runtime via the [mfz-jne](https://github.com/jjlauer/java-jne) support library.
 Thus, you can use Kyoto Cabinet in Java without having to install any libraries
