@@ -23,6 +23,10 @@ The libraries were compiled on recommended Java MBE (minimum build environment)
 operating systems that match what Oracle uses to build the JDK itself. This should
 help provide the best possible compatability across OS distros and versions.
 
+The library version number will always start with version number from the main
+kyotocabinet source release. The 4th digit will represent the release of this
+library (e.g. 1.2.76.0).
+
 The current version of this library uses the following:
 
  - Kyoto Cabinet v1.2.76 (http://fallabs.com/kyotocabinet)
@@ -53,8 +57,14 @@ Everything else including the package name "kyotocabinet" remains the same.
 
 ### Test and Demos
 
+Simple tests
+
     mvn test
 
+Simple demo
+
     mvn -e test-compile exec:java -Dexec.classpathScope="test" -Dexec.mainClass="com.mfizz.kyoto.demo.KyotoMain" -Djne.debug="1"
+
+Kyoto wicked test
 
     mvn -e test-compile exec:java -Dexec.classpathScope="test" -Dexec.mainClass="kyotocabinet.Test" -Dexec.args="wicked target/wicked.kch 2"
