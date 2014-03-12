@@ -1,7 +1,9 @@
 
+## Compiling on Windows
+
 ### Prerequisites
 
-#### wget, tar, gzip utils
+#### Command-line tools for build (using windows command prompt)
 
     http://downloads.sourceforge.net/gnuwin32/wget-1.11.4-1-setup.exe
     http://downloads.sourceforge.net/project/gnuwin32/tar/1.13-1/tar-1.13-1-bin.exe
@@ -9,41 +11,41 @@
     http://downloads.sourceforge.net/project/gnuwin32/unzip/5.51-1/unzip-5.51-1.exe
     http://downloads.sourceforge.net/project/gnuwin32/sed/4.2.1/sed-4.2.1-setup.exe
 
-#### dependency walker (like linux ldd / mac otool)
+#### Dependency walker (like linux ldd / mac otool)
 
     http://www.dependencywalker.com/depends22_x64.zip
 
+#### Wireshark project has great doc on setup of MS tools
 
-# Useful info for wireshark (helps for any command-line builds)
-# http://www.wireshark.org/docs/wsdg_html_chunked/ChSetupWin32.html
+    http://www.wireshark.org/docs/wsdg_html_chunked/ChSetupWin32.html
 
+#### Windows 8
 
-# On Windows 8:
-#  Install Visual Studio C++ Express Edition 2010/2013
-#  Install Windows SDK for 8.1
+1. Install Visual Studio C++ Express Edition 2010/2013
+2. Install Windows SDK for 8.1
+3. Open up correct command prompt:
 
-# Then to compile for x64:
-#  Run "VS2012 x64 Cross Tools Command Prompt"
+    To compile for x64: run "VS2012 x64 Cross Tools Command Prompt"
 
-# Then to compile for x86:
-#  Run "VS2012 x86 Cross Tools Command Prompt"
+    To compile for x86: run "VS2012 x86 Cross Tools Command Prompt"
 
+#### On Windows 7 (or XP):
 
-# On Windows 7 (or XP):
-#  Install Microsoft Visual C++ 2010 Express Edition
-#  Install Microsoft Windows SDK for Windows 7
-#    In case the install of the SDK fails go to software management and remove
-#    the VC++ 2010 runtime and redist packages
-#  Install Microsoft Visual Studio 2010 Service Pack 1
-#  Microsoft Visual C++ 2010 Service Pack 1 Compiler Update for the Windows SDK 7.1
+1. Install Microsoft Visual C++ 2010 Express Edition
+2. Install Microsoft Windows SDK for Windows 7
+    In case the install of the SDK fails go to software management and remove
+    the VC++ 2010 runtime and redist packages.
+3. Install Microsoft Visual Studio 2010 Service Pack 1
+4. Microsoft Visual C++ 2010 Service Pack 1 Compiler Update for the Windows SDK 7.1
+5. Open up correct command prompt:
 
-# Then to compile for x64:
-#  Run "Windows SDK 7.1 Command Prompt" (under Start Menu -> Microsoft Windows SDK v7.1)
-#  SetEnv /Release /x64 /XP
+To compile for x64:
+    Run "Windows SDK 7.1 Command Prompt" (under Start Menu -> Microsoft Windows SDK v7.1)
+    SetEnv /Release /x64 /XP
 
-# Then to compile for x86:
-#  Run "Windows SDK 7.1 Command Prompt" (under Start Menu -> Microsoft Windows SDK v7.1)
-#  SetEnv /Release /x86 /XP
+To compile for x86:
+    Run "Windows SDK 7.1 Command Prompt" (under Start Menu -> Microsoft Windows SDK v7.1)
+    SetEnv /Release /x86 /XP
 
 
 # include a few utils like wget, tar, gzip
