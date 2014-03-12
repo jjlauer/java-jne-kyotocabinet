@@ -29,7 +29,7 @@
     - To compile for x86:
         Run "VS2012 x86 Cross Tools Command Prompt"
 
-#### On Windows 7 (or XP):
+#### Windows 7 (or XP):
 
 1. Install Microsoft Visual C++ 2010 Express Edition
 2. Install Microsoft Windows SDK for Windows 7
@@ -45,39 +45,52 @@
         - Run "Windows SDK 7.1 Command Prompt" (under Start Menu -> Microsoft Windows SDK v7.1)
         - SetEnv /Release /x86 /XP
 
+#### Command-line tools to PATH environment var
 
-# include a few utils like wget, tar, gzip
-# either add to path here or set as permanent env var
-set PATH=%PATH%;"C:\Program Files (x86)\GnuWin32\bin"
+Add using "Computer -> Properties -> Environment Vars" or add to path in your
+command prompt:
 
+    set PATH=%PATH%;"C:\Program Files (x86)\GnuWin32\bin"
 
-set BUILD_ARCH=x64
+#### Set build target
 
-OR
+For x64:
 
-set BUILD_ARCH=x32
+    set BUILD_ARCH=x64
 
+For x32:
 
-mkdir native
-mkdir native\win-%BUILD_ARCH%
-cd native\win-%BUILD_ARCH%
+    set BUILD_ARCH=x32
 
+#### Create directories for library sources build
 
+Navigate to your project directory. For example, "C:\Users\Joe Lauer\workspace\java-jne-kyotocabinet".
 
-# LZO lib
-wget http://www.oberhumer.com/opensource/lzo/download/lzo-2.06.tar.gz
-gzip -d lzo-2.06.tar.gz
-tar xvf lzo-2.06.tar
-cd lzo-2.06
-
-# for win64 static lib
-B\win64\vc.bat
-
-# for win32 static lib
-B\win32\vc.bat
+    mkdir native
+    mkdir native\win-%BUILD_ARCH%
+    cd native\win-%BUILD_ARCH%
 
 
-cd ..
+#### Build LZO static library
+
+Download and extract sources
+
+    wget http://www.oberhumer.com/opensource/lzo/download/lzo-2.06.tar.gz
+    gzip -d lzo-2.06.tar.gz
+    tar xvf lzo-2.06.tar
+    cd lzo-2.06
+
+Configure and make x64 library
+    
+    B\win64\vc.bat
+
+Configure and make x32 library
+
+    B\win32\vc.bat
+
+Return to root build
+
+    cd ..
 
 
 # Z lib
