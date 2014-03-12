@@ -1,13 +1,17 @@
 
-# wget, tar, gzip utils
-# http://downloads.sourceforge.net/gnuwin32/wget-1.11.4-1-setup.exe
-# http://downloads.sourceforge.net/project/gnuwin32/tar/1.13-1/tar-1.13-1-bin.exe
-# http://downloads.sourceforge.net/project/gnuwin32/gzip/1.3.12-1/gzip-1.3.12-1-setup.exe
-# http://downloads.sourceforge.net/project/gnuwin32/unzip/5.51-1/unzip-5.51-1.exe
-# http://downloads.sourceforge.net/project/gnuwin32/sed/4.2.1/sed-4.2.1-setup.exe
+### Prerequisites
 
-# dependency walkter is nice to view what libs something uses
-# http://www.dependencywalker.com/depends22_x64.zip
+#### wget, tar, gzip utils
+
+http://downloads.sourceforge.net/gnuwin32/wget-1.11.4-1-setup.exe
+http://downloads.sourceforge.net/project/gnuwin32/tar/1.13-1/tar-1.13-1-bin.exe
+http://downloads.sourceforge.net/project/gnuwin32/gzip/1.3.12-1/gzip-1.3.12-1-setup.exe
+http://downloads.sourceforge.net/project/gnuwin32/unzip/5.51-1/unzip-5.51-1.exe
+http://downloads.sourceforge.net/project/gnuwin32/sed/4.2.1/sed-4.2.1-setup.exe
+
+#### dependency walker (like linux ldd / mac otool)
+
+http://www.dependencywalker.com/depends22_x64.zip
 
 
 # Useful info for wireshark (helps for any command-line builds)
