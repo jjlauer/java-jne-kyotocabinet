@@ -70,6 +70,7 @@ Navigate to your project directory. For example, "C:\Users\Joe Lauer\workspace\j
     mkdir native\win-%BUILD_ARCH%
     cd native\win-%BUILD_ARCH%
 
+### Build
 
 #### Build LZO static library
 
@@ -95,6 +96,8 @@ Return to root build
 
 #### Build ZLIB static library
 
+Download and extract sources
+
     wget http://zlib.net/zlib-1.2.8.tar.gz
     gzip -d zlib-1.2.8.tar.gz
     tar xvf zlib-1.2.8.tar
@@ -114,12 +117,16 @@ Return to root build
 
 #### Build LZMA static library (NOT WORKING YET; SKIP FOR NOW)
 
+Download and extract binaries
+
     md xz-5.0.5-windows
     cd xz-5.0.5-windows
     wget http://tukaani.org/xz/xz-5.0.5-windows.zip
     unzip xz-5.0.5-windows.zip
 
 #### Build KYOTOCABINET static library
+
+Download and extract sources
 
     wget http://fallabs.com/kyotocabinet/pkg/kyotocabinet-1.2.76.tar.gz
     gzip -d kyotocabinet-1.2.76.tar.gz
@@ -154,6 +161,8 @@ Return to root build
     cd ..
 
 #### Build KYOTOCABINET Java native dynamic library
+
+Download and extract sources
 
     wget http://fallabs.com/kyotocabinet/javapkg/kyotocabinet-java-1.24.tar.gz
     gzip -d kyotocabinet-java-1.24.tar.gz
