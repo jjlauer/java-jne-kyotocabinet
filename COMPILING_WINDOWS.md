@@ -54,11 +54,11 @@ command prompt:
 
 #### Set build target
 
-For x64:
+To build x64:
 
     set BUILD_ARCH=x64
 
-For x32:
+Or to build x32:
 
     set BUILD_ARCH=x32
 
@@ -80,11 +80,11 @@ Download and extract sources
     tar xvf lzo-2.06.tar
     cd lzo-2.06
 
-Configure and make x64 library
+To configure and build x64 library
     
     B\win64\vc.bat
 
-Configure and make x32 library
+Or to configure and build x32 library
 
     B\win32\vc.bat
 
@@ -93,103 +93,107 @@ Return to root build
     cd ..
 
 
-# Z lib
-wget http://zlib.net/zlib-1.2.8.tar.gz
-gzip -d zlib-1.2.8.tar.gz
-tar xvf zlib-1.2.8.tar
-cd zlib-1.2.8
+#### Build ZLIB static library
 
-# to build for x64 (with assembly code)
-nmake -f win32/Makefile.msc AS=ml64 LOC="-DASMV -DASMINF -I." OBJA="inffasx64.obj gvmat64.obj inffas8664.obj"
+    wget http://zlib.net/zlib-1.2.8.tar.gz
+    gzip -d zlib-1.2.8.tar.gz
+    tar xvf zlib-1.2.8.tar
+    cd zlib-1.2.8
 
-# to build for x32 (with assembly code)
-nmake -f win32/Makefile.msc LOC="-DASMV -DASMINF" OBJA="inffas32.obj match686.obj"
+To configure and build x64 library (with assembly code)
 
+    nmake -f win32/Makefile.msc AS=ml64 LOC="-DASMV -DASMINF -I." OBJA="inffasx64.obj gvmat64.obj inffas8664.obj"
 
+Or to configure and build x32 library (with assembly code)
 
-# SKIP THIS ON WINDOWS!
-# LZMA lib (already pre-built libraries for windows!!!)
-md xz-5.0.5-windows
-cd xz-5.0.5-windows
-wget http://tukaani.org/xz/xz-5.0.5-windows.zip
-unzip xz-5.0.5-windows.zip
+    nmake -f win32/Makefile.msc LOC="-DASMV -DASMINF" OBJA="inffas32.obj match686.obj"
 
+Return to root build
 
+    cd ..
 
-# Build kyotocabinet.lib
-wget http://fallabs.com/kyotocabinet/pkg/kyotocabinet-1.2.76.tar.gz
-gzip -d kyotocabinet-1.2.76.tar.gz
-tar xvf kyotocabinet-1.2.76.tar
-cd kyotocabinet-1.2.76
+#### Build LZMA static library (NOT WORKING YET; SKIP FOR NOW)
 
+    md xz-5.0.5-windows
+    cd xz-5.0.5-windows
+    wget http://tukaani.org/xz/xz-5.0.5-windows.zip
+    unzip xz-5.0.5-windows.zip
 
-# The default VCmakefile unfortunately overrides environment vars
-# that Windows SDK by default provides.  Here is how you fix the
-# makefile. If you already modified win-x64, just use that one
-# xcopy ..\..\win-x64\kyotocabinet-1.2.76\VCmakefile .\
+#### Build KYOTOCABINET static library
 
-# use sed to correct the VCmakefile
-sed -i -e "s/VCPATH \= /#VCPATH \= /" VCmakefile
-sed -i -e "s/SDKPATH \= /#SDKPATH \= /" VCmakefile
-sed -i -e "s/CL = cl/CLCMD = cl/" VCmakefile
-sed -i -e "s/LIB = lib/LIBCMD = lib/" VCmakefile
-sed -i -e "s/LINK = link/LINKCMD = link/" VCmakefile
-sed -i -e "s/\$(CL)/\$(CLCMD)/" VCmakefile
-sed -i -e "s/\$(LIB)/\$(LIBCMD)/" VCmakefile
-sed -i -e "s/\$(LINK)/\$(LINKCMD)/" VCmakefile
-sed -i -e "s/\tcopy \*.exe/#\tcopy *.exe/" VCmakefile
+    wget http://fallabs.com/kyotocabinet/pkg/kyotocabinet-1.2.76.tar.gz
+    gzip -d kyotocabinet-1.2.76.tar.gz
+    tar xvf kyotocabinet-1.2.76.tar
+    cd kyotocabinet-1.2.76
 
-# to enable LZO and ZLIB
-sed -i -e "s/\/D_CRT_SECURE_NO_WARNINGS \\/\/D_CRT_SECURE_NO_WARNINGS \/D_MYLZO \/I \"..\\lzo-2.06\\include\" \/D_MYZLIB \/I \"..\\zlib-1.2.8\" \\/" VCmakefile
+The default VCmakefile unfortunately overrides environment vars that conflict
+with the Windows SDK. They also break the /X64 or /X86 switches set above. We
+will run a series of sed commands to edit the makefile.
 
-nmake -f VCmakefile kyotocabinet.lib
-nmake -f VCmakefile binpkg
+    sed -i -e "s/VCPATH \= /#VCPATH \= /" VCmakefile
+    sed -i -e "s/SDKPATH \= /#SDKPATH \= /" VCmakefile
+    sed -i -e "s/CL = cl/CLCMD = cl/" VCmakefile
+    sed -i -e "s/LIB = lib/LIBCMD = lib/" VCmakefile
+    sed -i -e "s/LINK = link/LINKCMD = link/" VCmakefile
+    sed -i -e "s/\$(CL)/\$(CLCMD)/" VCmakefile
+    sed -i -e "s/\$(LIB)/\$(LIBCMD)/" VCmakefile
+    sed -i -e "s/\$(LINK)/\$(LINKCMD)/" VCmakefile
+    sed -i -e "s/\tcopy \*.exe/#\tcopy *.exe/" VCmakefile
 
+To enable LZO and ZLIB:
 
-cd ..
+    sed -i -e "s/\/D_CRT_SECURE_NO_WARNINGS \\/\/D_CRT_SECURE_NO_WARNINGS \/D_MYLZO \/I \"..\\lzo-2.06\\include\" \/D_MYZLIB \/I \"..\\zlib-1.2.8\" \\/" VCmakefile
 
+To configure and build library
 
-# java wrapper to lib
-wget http://fallabs.com/kyotocabinet/javapkg/kyotocabinet-java-1.24.tar.gz
-gzip -d kyotocabinet-java-1.24.tar.gz
-tar xvf kyotocabinet-java-1.24.tar
-cd kyotocabinet-java-1.24
+    nmake -f VCmakefile kyotocabinet.lib
+    nmake -f VCmakefile binpkg
 
+Return to root build
 
-# copy libs from kyotolib
-xcopy /s ..\kyotocabinet-1.2.76\kcwin32 .\kcwin32
+    cd ..
 
-# copy libs from lzo
-xcopy /s ..\lzo-2.06\*.lib .\kcwin32\lib
-# copy libs from zlib
-xcopy /s ..\zlib-1.2.8\*.lib .\kcwin32\lib
+#### Build KYOTOCABINET Java native dynamic library
 
+    wget http://fallabs.com/kyotocabinet/javapkg/kyotocabinet-java-1.24.tar.gz
+    gzip -d kyotocabinet-java-1.24.tar.gz
+    tar xvf kyotocabinet-java-1.24.tar
+    cd kyotocabinet-java-1.24
 
+Copy dependencies from kyotocabinet:
 
-# The default VCmakefile has the wrong paths to the sdks, java, etc...
-sed -i -e "s/VCPATH \= /#VCPATH \= /" VCmakefile
-sed -i -e "s/SDKPATH \= /#SDKPATH \= /" VCmakefile
-sed -i -e "s/JDKPATH \= .*/JDKPATH \= \$(JAVA_HOME)/" VCmakefile
-sed -i -e "s/CL = cl/CLCMD = cl/" VCmakefile
-sed -i -e "s/LIB = lib/LIBCMD = lib/" VCmakefile
-sed -i -e "s/LINK = link/LINKCMD = link/" VCmakefile
-sed -i -e "s/\$(CL)/\$(CLCMD)/" VCmakefile
-sed -i -e "s/\$(LIB)/\$(LIBCMD)/" VCmakefile
-sed -i -e "s/\$(LINK)/\$(LINKCMD)/" VCmakefile
+    xcopy /s ..\kyotocabinet-1.2.76\kcwin32 .\kcwin32
 
-# Add linkage to LZO and ZLIB
-sed -i -e "s/kcwin32\\lib\\kyotocabinet.lib/\/NODEFAULTLIB:MSVCRT \$(KCPATH)\\lib\\kyotocabinet.lib \$(KCPATH)\\lib\\lzo2.lib \$(KCPATH)\\lib\\zlib.lib/" VCmakefile
+Copy depdenencies from lzo (if enabled):
 
-nmake -f VCmakefile
+    xcopy /s ..\lzo-2.06\*.lib .\kcwin32\lib
 
+Copy depdenencies from zlib (if enabled):
 
-# jkyotocabinet.dll will not be in the directory
-xcopy jkyotocabinet.dll ..\..\..\jne\windows\%BUILD_ARCH%\
+    xcopy /s ..\zlib-1.2.8\*.lib .\kcwin32\lib
 
+The default VCmakefile unfortunately overrides environment vars that conflict
+with the Windows SDK. They also break the /X64 or /X86 switches set above. We
+will run a series of sed commands to edit the makefile.
 
-## Testing x64 and x32 on same system
-# Assuming you are on x64 by default with an x64 of Java - do your normal testing
-# To override to x32 Java, just do the following:
-set JAVA_HOME=C:\Program Files (x86)\Java\jdk1.7.0_51
-set PATH=%JAVA_HOME%\bin;%PATH%
+    sed -i -e "s/VCPATH \= /#VCPATH \= /" VCmakefile
+    sed -i -e "s/SDKPATH \= /#SDKPATH \= /" VCmakefile
+    sed -i -e "s/JDKPATH \= .*/JDKPATH \= \$(JAVA_HOME)/" VCmakefile
+    sed -i -e "s/CL = cl/CLCMD = cl/" VCmakefile
+    sed -i -e "s/LIB = lib/LIBCMD = lib/" VCmakefile
+    sed -i -e "s/LINK = link/LINKCMD = link/" VCmakefile
+    sed -i -e "s/\$(CL)/\$(CLCMD)/" VCmakefile
+    sed -i -e "s/\$(LIB)/\$(LIBCMD)/" VCmakefile
+    sed -i -e "s/\$(LINK)/\$(LINKCMD)/" VCmakefile
 
+Add linkage to LZO and ZLIB:
+
+    sed -i -e "s/kcwin32\\lib\\kyotocabinet.lib/\/NODEFAULTLIB:MSVCRT \$(KCPATH)\\lib\\kyotocabinet.lib \$(KCPATH)\\lib\\lzo2.lib \$(KCPATH)\\lib\\zlib.lib/" VCmakefile
+
+To configure and build library
+
+    nmake -f VCmakefile
+
+#### Copy Java native dynamic library
+
+    xcopy jkyotocabinet.dll ..\..\..\jne\windows\%BUILD_ARCH%\
