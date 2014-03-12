@@ -23,11 +23,11 @@
 
 1. Install Visual Studio C++ Express Edition 2010/2013
 2. Install Windows SDK for 8.1
-3. Open up correct command prompt:
-
-    To compile for x64: run "VS2012 x64 Cross Tools Command Prompt"
-
-    To compile for x86: run "VS2012 x86 Cross Tools Command Prompt"
+3. Open up correct command prompt
+    To compile for x64:
+        Run "VS2012 x64 Cross Tools Command Prompt"
+    To compile for x86:
+        Run "VS2012 x86 Cross Tools Command Prompt"
 
 #### On Windows 7 (or XP):
 
@@ -38,14 +38,12 @@
 3. Install Microsoft Visual Studio 2010 Service Pack 1
 4. Microsoft Visual C++ 2010 Service Pack 1 Compiler Update for the Windows SDK 7.1
 5. Open up correct command prompt:
-
-To compile for x64:
-    Run "Windows SDK 7.1 Command Prompt" (under Start Menu -> Microsoft Windows SDK v7.1)
-    SetEnv /Release /x64 /XP
-
-To compile for x86:
-    Run "Windows SDK 7.1 Command Prompt" (under Start Menu -> Microsoft Windows SDK v7.1)
-    SetEnv /Release /x86 /XP
+    To compile for x64:
+        Run "Windows SDK 7.1 Command Prompt" (under Start Menu -> Microsoft Windows SDK v7.1)
+        SetEnv /Release /x64 /XP
+    To compile for x86:
+        Run "Windows SDK 7.1 Command Prompt" (under Start Menu -> Microsoft Windows SDK v7.1)
+        SetEnv /Release /x86 /XP
 
 
 # include a few utils like wget, tar, gzip
