@@ -33,8 +33,10 @@
 
 1. Install Microsoft Visual C++ 2010 Express Edition
 2. Install Microsoft Windows SDK for Windows 7
+    
     In case the install of the SDK fails go to software management and remove
     the VC++ 2010 runtime and redist packages.
+
 3. Install Microsoft Visual Studio 2010 Service Pack 1
 4. Microsoft Visual C++ 2010 Service Pack 1 Compiler Update for the Windows SDK 7.1
 5. Open up correct command prompt:
