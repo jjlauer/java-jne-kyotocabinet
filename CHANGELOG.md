@@ -1,5 +1,5 @@
 
-### 1.2.76.0 - 2014-03-11
+#### 1.2.76.0 - 2014-03-11
   - Initial release
   - Based on
    - kyotocabinet-1.2.76
