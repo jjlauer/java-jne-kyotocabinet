@@ -20,7 +20,7 @@ package kyotocabinet;
  * #L%
  */
 
-import com.mfizz.jne.JNE;
+import com.fizzed.jne.JNE;
 
 /**
  * Replaced default Kyoto Loader.java with this one that uses JNE for loading
